@@ -5,9 +5,7 @@ stages:
   jobs:    
   - job:    
     pool:
-      vmImage: 'ubuntu-latest'    
-    workspace:
-    clean: outputs | resources | all # what to clean up before the job runs
+      vmImage: 'ubuntu-latest'        
     steps:
     - checkout: self    
  
