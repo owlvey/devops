@@ -18,7 +18,7 @@ stages:
       inputs:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Owlvey Docker Connection'
-        dockerComposeFile: './owlvey_falcon_ui/containers/docker-compose.yml'
+        dockerComposeFile: './owlvey_falcon_ui/containers/docker-compose.yaml'
         action: 'Build services'
         includeSourceTags: true
         includeLatestTag: true
