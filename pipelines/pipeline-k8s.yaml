@@ -1,7 +1,14 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)
+
 stages:
 - stage: commitStage   
-- stage: virtualStage   
-- stage: automatedStage   
-- stage: manualStage  
-- stage: releaseStage  
+  jobs:    
+  - job:    
+    pool:
+      vmImage: 'ubuntu-latest'    
+    workspace:
+    clean: outputs | resources | all # what to clean up before the job runs
+    steps:
+    - checkout: self    
+ 
+
