@@ -20,7 +20,9 @@ stages:
         dockerRegistryEndpoint: 'Owlvey Docker Connection'
         dockerComposeFile: './owlvey_identity/containers/docker-compose.yaml'
         action: 'Build services'        
-        includeLatestTag: true
+        qualifyImageNames: true
+        additionalImageTags: $(Build.BuildId)
+        
     - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Container Registry'
