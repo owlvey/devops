@@ -18,8 +18,9 @@ stages:
       inputs:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Owlvey Docker Connection'
-        dockerComposeFile: './owlvey_identity/containers/docker-compose.yaml'
+        dockerComposeFile: './containers/docker-compose.yaml'
         action: 'Build services'
         includeSourceTags: true
         includeLatestTag: true
+        currentWorkingDirectory: '$(System.DefaultWorkingDirectory)/owlvey_identity'
  
