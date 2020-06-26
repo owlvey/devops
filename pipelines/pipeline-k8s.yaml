@@ -1,5 +1,10 @@
 name: $(Date:yyyyMMdd)$(Rev:.r)
-
+resources:
+  repositories:
+  - repository: falconUI # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: owlvey
+    name: owlvey/owlvey_falcon_ui
 stages:
 - stage: commitStage   
   jobs:    
@@ -8,6 +13,6 @@ stages:
       vmImage: 'ubuntu-latest'        
     steps:
     - checkout: self    
-    - checkout: github://owlvey/owlvey_falcon_ui
+    - checkout: falconUI
  
 
