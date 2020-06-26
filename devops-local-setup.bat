@@ -8,6 +8,18 @@ kubectl delete -f ./gateway/gateway-install.yaml
 TIMEOUT 5
 kubectl apply -f ./gateway/gateway-install.yaml
 TIMEOUT 5
+kubectl delete -f ./dashboard/deploy-admin.yaml
+
+kubectl delete namespace kubernetes-dashboard
+
+TIMEOUT 5
+kubectl create namespace kubernetes-dashboard
+kubectl apply -f ./dashboard/deploy-dashboard.yaml
+kubectl apply -f ./dashboard/deploy-admin.yaml
+kubectl apply -f ./dashboard/route-dashboard.yaml
+
+TIMEOUT 5
+
 rmdir /Q /S Containers
 TIMEOUT 5
 rmdir /Q /S Containers
@@ -38,7 +50,5 @@ REM cluster.bat
 
 popd
 
-
-
-
-
+REM DASHBOARD TOKEN
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)

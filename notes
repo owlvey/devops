@@ -1,6 +1,7 @@
 48100 cluster service port for everything 
 
 48100 puesto 80
+48102 dashboard-metrics
 482XX nginx-ingress tcp port 
 48200
 48201 http

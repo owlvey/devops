@@ -1,0 +1,12 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+stages:
+- stage: commitStage 
+  display: commit-stage
+- stage: virtualStage 
+  display: virtual-automated-stage
+- stage: automatedStage 
+  display: automated-stage
+- stage: manualStage
+  display: manual-stage
+- stage: releaseStage
+  display: release-stage

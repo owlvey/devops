@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cluster-dashboard-site
+  namespace: kubernetes-dashboard
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`dashboard.cluster.com`) 
+    kind: Rule
+    services:
+    - name: kubernetes-dashboard
+      port: 80
