@@ -13,6 +13,14 @@ stages:
       vmImage: 'ubuntu-latest'        
     steps:
     - checkout: self    
-    - checkout: falconUI
+    - checkout: falconUI    
+    - task: DockerCompose@0
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Owlvey Docker Connection'
+        dockerComposeFile: './containers/docker-compose.yml'
+        action: 'Build services'
+        includeSourceTags: true
+        includeLatestTag: true
  
 
