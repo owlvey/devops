@@ -11,8 +11,7 @@ stages:
   - job:    
     pool:
       vmImage: 'ubuntu-latest'        
-    steps:
-    - checkout: self    
+    steps:    
     - checkout: identity    
     - task: DockerCompose@0
       inputs:
@@ -23,8 +22,6 @@ stages:
         qualifyImageNames: true
         includeSourceTags: true
         additionalImageTags: 'cs-$(Build.BuildId)'
-        workingDirectory: $(Agent.BuildDirectory)/owlvey_identity
-
         
     - task: DockerCompose@0
       inputs:
