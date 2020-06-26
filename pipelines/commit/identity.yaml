@@ -18,11 +18,12 @@ stages:
       inputs:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Owlvey Docker Connection'
-        dockerComposeFile: './owlvey_identity/containers/docker-compose.yaml'
+        dockerComposeFile: './containers/docker-compose.yaml'
         action: 'Build services'        
         qualifyImageNames: true
         includeSourceTags: true
         additionalImageTags: 'cs-$(Build.BuildId)'
+        workingDirectory: $(Agent.BuildDirectory)/owlvey_identity
 
         
     - task: DockerCompose@0
@@ -33,6 +34,6 @@ stages:
         action: Push services
         qualifyImageNames: true
         additionalImageTags: 'cs-$(Build.BuildId)'
-        
+        workingDirectory: $(Agent.BuildDirectory)/owlvey_identity
         
  
