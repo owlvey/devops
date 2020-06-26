@@ -1,0 +1,25 @@
+name: $(Date:yyyyMMdd)$(Rev:.r)
+resources:
+  repositories:
+  - repository: identity # The name used to reference this repository in the checkout step
+    type: github
+    endpoint: owlvey
+    name: owlvey/owlvey_identity
+stages:
+- stage: commitStage   
+  jobs:    
+  - job:    
+    pool:
+      vmImage: 'ubuntu-latest'        
+    steps:
+    - checkout: self    
+    - checkout: identity    
+    - task: DockerCompose@0
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Owlvey Docker Connection'
+        dockerComposeFile: './owlvey_identity/containers/docker-compose.yaml'
+        action: 'Build services'
+        includeSourceTags: true
+        includeLatestTag: true
+ 
