@@ -21,7 +21,9 @@ stages:
         dockerComposeFile: './owlvey_identity/containers/docker-compose.yaml'
         action: 'Build services'        
         qualifyImageNames: true
-        additionalImageTags: $(Build.BuildId)
+        includeSourceTags: true
+        additionalImageTags: 'cs-$(Build.BuildId)'
+
         
     - task: DockerCompose@0
       inputs:
@@ -30,7 +32,7 @@ stages:
         dockerComposeFile: './owlvey_identity/containers/docker-compose.yaml'
         action: Push services
         qualifyImageNames: true
-        additionalImageTags: $(Build.BuildId)
+        additionalImageTags: 'cs-$(Build.BuildId)'
         
         
  
