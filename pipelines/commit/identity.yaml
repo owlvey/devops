@@ -11,13 +11,14 @@ stages:
   - job:    
     pool:
       vmImage: 'ubuntu-latest'        
-    steps:    
+    steps:
+    - checkout: self    
     - checkout: identity    
     - task: DockerCompose@0
       inputs:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Owlvey Docker Connection'
-        dockerComposeFile: './containers/docker-compose.yaml'
+        dockerComposeFile: './owlvey_identity/containers/docker-compose.yaml'
         action: 'Build services'        
         qualifyImageNames: true
         includeSourceTags: true
@@ -31,6 +32,6 @@ stages:
         action: Push services
         qualifyImageNames: true
         additionalImageTags: 'cs-$(Build.BuildId)'
-        workingDirectory: $(Agent.BuildDirectory)/owlvey_identity
+        
         
  
