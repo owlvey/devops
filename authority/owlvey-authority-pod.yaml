@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: owlvey-authority-pod
+  namespace: owlvey
+  labels:
+    app: owlvey-authority-pod-app
+spec:
+  dnsPolicy: ClusterFirst
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+  - name: owlvey-authority
+    image: "owlvey/authority:latest"
+    imagePullPolicy: Never
+    ports:
+        - containerPort: 80
+    env:
+        - name: "ASPNETCORE_ENVIRONMENT"
+          value: "docker"
+        - name: "Authentication__User"
+          value: "admin@owlvey.com"
+        - name: "Authentication__Password"
+          value: "0wlv3y@"
+        - name: "Authentication__Email"
+          value: "admin@owlvey.com"
+        - name: "ASPNETCORE_ENVIRONMENT"
+          value: "k8s"

@@ -1,0 +1,1 @@
+kubectl exec -it owlvey-state-pod -n owlvey -- sh

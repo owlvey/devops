@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: owlvey-bifrost-dev-deployment
+  namespace: owlvey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: owlvey-bifrost-pod
+  template:
+    metadata:
+      labels:
+        key: owlvey-bifrost-pod
+    spec:
+      volumes:
+      - name: source
+        hostPath:
+          path: /host_mnt/f/owlvey/devops/bifrost
+          type: DirectoryOrCreate
+      initContainers:
+      - name: kaniko
+        image: gcr.io/kaniko-project/executor:latest
+        args: ["--dockerfile=/workspace/Dockerfile",
+               "--context=dir://",
+               "--destination=192.168.0.14:48700/owlvey/bifrost:latest", "--insecure-registry", "--insecure"]
+        volumeMounts:
+        - mountPath: /workspace
+          name: source
+      containers:
+      - name: owlvey-bifrost
+        image: localhost:48700/owlvey/bifrost:latest
+        imagePullPolicy: Always
+        ports:
+            - containerPort: 48702
+              name: admin-port
+            - containerPort: 48701
+              name: listerner-port
+        env:
+            - name: "ENVIRONMENT"
+              value: "k8s"

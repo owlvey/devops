@@ -1,0 +1,5 @@
+kubectl port-forward owlvey-authority-pod 7000:80 -n owlvey
+
+kubectl logs owlvey-authority-pod -n owlvey
+
+# activate dev mode

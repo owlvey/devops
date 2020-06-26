@@ -1,0 +1,16 @@
+48100 cluster service port for everything 
+
+48100 puesto 80
+482XX nginx-ingress tcp port 
+48200
+48201 http
+48202 https
+48203 tcp service 
+48204 tcp service 
+48205 tcp service 
+
+install helm 
+
+https://helm.sh/docs/intro/install/
+
+choco install kubernetes-helm

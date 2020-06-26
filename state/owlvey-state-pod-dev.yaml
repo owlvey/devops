@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: owlvey-state-pod
+  namespace: owlvey
+  labels:
+    app: owlvey-state-pod-app
+spec:
+  dnsPolicy: ClusterFirst
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+    - name: db
+      image: localhost:48700/owlvey/relational:latest
+      ports:
+        - containerPort: 1433
+      env:
+        - name: "SA_PASSWORD"
+          value: "TheFalcon123"
+        - name: "ACCEPT_EULA"
+          value: "Y"
+        - name: "ASPNETCORE_ENVIRONMENT"
+          value: "docker"
+        - name: "MSSQL_PID"
+          value: "Express"
+        - name: "ASPNETCORE_ENVIRONMENT"
+          value: "k8s"

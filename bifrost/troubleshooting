@@ -1,0 +1,22 @@
+kubectl exec -it deployment/owlvey-bifrost-dev-deployment -n owlvey -- sh
+kubectl get pods -n owlvey  -l key=owlvey-bifrost-pod -o wide
+
+kubectl delete pod -n owlvey  -l key=owlvey-bifrost-pod 
+kubectl describe pods -n owlvey  deployment/owlvey-bifrost-dev-deployment
+kubectl logs deployment/owlvey-bifrost-dev-deployment -n owlvey
+
+kubectl port-forward deployment/owlvey-bifrost-local-deployment 48777:48701 81:48702 -n owlvey
+
+kubectl delete pod  -l key=owlvey-bifrost-pod -n owlvey
+
+kubectl delete -f ./bifrost/deploy-bifrost-dev.yaml -n owlvey
+
+
+kubectl get deployments -n owlvey
+
+kubectl describe deployments owlvey-bifrost-dev-deployment -n owlvey
+
+REM curl -X GET http://localhost:48700/v2/owlvey/bifrost/tags/list
+
+docker run --name bifrost -p 8090:48701 --rm localhost:48700/owlvey/bifrost:latest
+docker stop bifrost

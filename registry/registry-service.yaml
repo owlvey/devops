@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: registry-service
+  namespace: owlvey
+spec:
+  # ClusterIP NodePort LoadBalancer
+  type: ClusterIP
+  selector:
+    key: owlvey-registry-pod
+  ports:
+    - name: registry
+      protocol: TCP
+      port: 48000
+      targetPort: 5000

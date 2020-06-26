@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: owlvey-api-pod
+  namespace: owlvey
+  labels:
+    app: owlvey-api-pod-app
+spec:
+  dnsPolicy: ClusterFirst  
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+    - name: owlvey-api
+      image: owlvey/api:latest
+      ports:
+        - containerPort: 80
+      env:
+          - name: "ASPNETCORE_ENVIRONMENT"
+            value: "k8s"

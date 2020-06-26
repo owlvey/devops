@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: owlvey-bifrost-pod
+  namespace: owlvey
+  labels:
+    app: owlvey-bifrost-pod-app
+    key: owlvey-bifrost-pod-app
+spec:
+  dnsPolicy: ClusterFirst
+  volumes:
+  - name: shared-data
+    emptyDir: {}
+  containers:
+  - name: owlvey-bifrost
+    image: localhost:48700/owlvey/bifrost:latest
+    ports:
+        - containerPort: 48702
+          name: admin-port
+        - containerPort: 48701
+          name: listerner-port
+    imagePullPolicy: Always
+    env:
+        - name: "ENVIRONMENT"
+          value: "k8s"

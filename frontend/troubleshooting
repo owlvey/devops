@@ -1,0 +1,6 @@
+kubectl port-forward owlvey-site-pod 7000:80 -n owlvey
+
+https://kubernetes.io/docs/tasks/debug-application-cluster/debug-running-pod/
+
+
+kubectl logs owlvey-site-pod -n owlvey
