@@ -1,0 +1,9 @@
+https://www.nearform.com/blog/how-to-run-a-public-docker-registry-in-kubernetes/
+
+TIMEOUT 5
+kubectl delete namespace devops
+TIMEOUT 5
+kubectl create namespace devops
+kubectl apply -f ./registry/deploy-registry.yaml
+kubectl apply -f ./registry/service-registry.yaml
+kubectl apply -f ./registry/route-registry.yaml

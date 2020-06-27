@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: cluster-dashboard-site
+  namespace: devops
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`registry.cluster.com`) 
+    kind: Rule
+    services:
+    - name: cluster-registry
+      port: 48103

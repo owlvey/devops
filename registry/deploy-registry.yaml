@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devops-registry-local-deployment
+  namespace: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: devops-registry-pod
+  template:
+    metadata:
+      labels:
+        key: devops-registry-pod
+    spec:
+      containers:
+      - name: devops-registry
+        image: registry:2.6.2
+        ports:
+          - containerPort: 5000

@@ -11,7 +11,6 @@ TIMEOUT 5
 kubectl delete -f ./dashboard/deploy-admin.yaml
 
 kubectl delete namespace kubernetes-dashboard
-
 TIMEOUT 5
 kubectl create namespace kubernetes-dashboard
 kubectl apply -f ./dashboard/deploy-dashboard.yaml
@@ -20,35 +19,33 @@ kubectl apply -f ./dashboard/route-dashboard.yaml
 
 TIMEOUT 5
 
-rmdir /Q /S Containers
-TIMEOUT 5
-rmdir /Q /S Containers
-TIMEOUT 5
-mkdir Containers
 
-pushd Containers
-git clone git@github.com:owlvey/owlvey_falcon.git
+rmdir /Q /S cluster 
+TIMEOUT 5
+rmdir /Q /S cluster 
+TIMEOUT 5
+mkdir cluster 
+
+pushd cluster 
+git clone --branch develop git@github.com:owlvey/owlvey_falcon.git
 rmdir /Q /S "owlvey_falcon/.git"
-git clone git@github.com:owlvey/owlvey_identity.git
+git clone --branch develop git@github.com:owlvey/owlvey_identity.git
 rmdir /Q /S "owlvey_identity/.git"
-git clone git@github.com:owlvey/owlvey_falcon_ui.git
+git clone --branch develop git@github.com:owlvey/owlvey_falcon_ui.git
 rmdir /Q /S "owlvey_falcon_ui/.git"
 
 popd
 
 python ./local-builder.py
 
-pushd Containers
+pushd cluster 
 
 rem  build.bat
 
 popd
 
-pushd Containers
+pushd cluster 
 
 REM cluster.bat
 
 popd
-
-REM DASHBOARD TOKEN
-kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)

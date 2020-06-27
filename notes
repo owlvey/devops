@@ -2,6 +2,7 @@
 
 48100 puesto 80
 48102 dashboard-metrics
+48103 registry
 482XX nginx-ingress tcp port 
 48200
 48201 http
@@ -15,3 +16,9 @@ install helm
 https://helm.sh/docs/intro/install/
 
 choco install kubernetes-helm
+
+git checkout -b develop
+git push -u origin master
+
+REM REVIEW DASHBOARD TOKEN
+REM kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)

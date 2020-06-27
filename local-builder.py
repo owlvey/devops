@@ -14,21 +14,22 @@ class Repository:
         self.seed_service = []        
         self.seed_routes = []
 
+
 def remove_folders():
-    if os.path.exists('./containers/stage_deploy'):
-        rmtree('./containers/stage_deploy', ignore_errors=True)
-    if os.path.exists('./containers/stage_services'):        
-        rmtree('./containers/stage_services', ignore_errors=True)
-    if os.path.exists('./containers/stage_routes'):        
-        rmtree('./containers/stage_routes', ignore_errors=True)
+    if os.path.exists('./cluster/stage_deploy'):
+        rmtree('./cluster/stage_deploy', ignore_errors=True)
+    if os.path.exists('./cluster/stage_services'):        
+        rmtree('./cluster/stage_services', ignore_errors=True)
+    if os.path.exists('./cluster/stage_routes'):        
+        rmtree('./cluster/stage_routes', ignore_errors=True)
 
 def parse_repositories():
     remove_folders()
     
     repositories = []
-    for directory in [dI for dI in listdir('./containers') if path.isdir(path.join('./containers',dI))]:                        
+    for directory in [dI for dI in listdir('./cluster') if path.isdir(path.join('./cluster',dI))]:                        
         temp = Repository()
-        temp.directory = path.join("./containers",  directory, 'cluster')                                
+        temp.directory = path.join("./cluster",  directory, 'cluster')                                
         
         for target in [f for f in listdir(temp.directory) if f.startswith('deploy-')]:            
             if path.exists(path.join(temp.directory, target)):                
@@ -47,12 +48,12 @@ def parse_repositories():
     return repositories
 
 def create_folders():
-    if not os.path.exists('./containers/stage_deploy'):
-        mkdir('./containers/stage_deploy')
-    if not os.path.exists('./containers/stage_services'):
-        mkdir('./containers/stage_services')
-    if not os.path.exists('./containers/stage_routes'):        
-        mkdir('./containers/stage_routes')
+    if not os.path.exists('./cluster/stage_deploy'):
+        mkdir('./cluster/stage_deploy')
+    if not os.path.exists('./cluster/stage_services'):
+        mkdir('./cluster/stage_services')
+    if not os.path.exists('./cluster/stage_routes'):        
+        mkdir('./cluster/stage_routes')
 
 def execute_yaml(target):
     script = "{} \n".format(target)
@@ -72,21 +73,21 @@ def generate_stage(repositories):
     for repository in repositories:
         for deploy in repository.seed_deploy:            
             _ , filename = path.split(deploy)
-            copyfile(deploy, path.join('./containers/stage_deploy', filename))        
+            copyfile(deploy, path.join('./cluster/stage_deploy', filename))        
             script += execute_yaml("kubectl apply -f ./stage_deploy/{} \n".format(filename))
             queue_stage.append(execute_yaml("kubectl delete -f ./stage_deploy/{} \n".format(filename)))
             
     for repository in repositories:
         for service in repository.seed_service:            
             _ , filename = path.split(service)
-            copyfile(service, path.join('./containers/stage_services', filename))        
+            copyfile(service, path.join('./cluster/stage_services', filename))        
             script +=  execute_yaml("kubectl apply -f ./stage_services/{} \n".format(filename))
             queue_stage.append(execute_yaml("kubectl delete -f ./stage_services/{} \n".format(filename)))
     
     for repository in repositories:
         for service in repository.seed_routes:            
             _ , filename = path.split(service)
-            copyfile(service, path.join('./containers/stage_routes', filename))        
+            copyfile(service, path.join('./cluster/stage_routes', filename))        
             script +=  execute_yaml("kubectl apply -f ./stage_routes/{} \n".format(filename))
             queue_stage.append(execute_yaml("kubectl delete -f ./stage_routes/{} \n".format(filename)))
     
@@ -94,14 +95,14 @@ def generate_stage(repositories):
     while queue_stage:
         drop_stage += "\n" + queue_stage.pop()
 
-    with open('./Containers/stage.bat', 'w+') as w:
+    with open('./cluster/stage.bat', 'w+') as w:
         w.write(script)
-    with open('./Containers/stage.bash', 'w+') as w:
+    with open('./cluster/stage.bash', 'w+') as w:
         w.write(script)
     
-    with open('./Containers/drop_stage.bat', 'w+') as w:
+    with open('./cluster/drop_stage.bat', 'w+') as w:
         w.write(drop_stage)
-    with open('./Containers/drop_stage.bash', 'w+') as w:
+    with open('./cluster/drop_stage.bash', 'w+') as w:
         w.write(drop_stage)
 
 
@@ -112,16 +113,16 @@ def write_timeout(writer, timeout=5):
     write_line(writer, 'TIMEOUT {}'.format(timeout))
 
 def generate_cluster_builder():
-    with open('./Containers/build.bat', 'w+') as w:
-        for directory in [dI for dI in listdir('./Containers') if path.isdir(path.join('./containers',dI))]:                        
-            if path.exists("./Containers/{}/devops-build-local.bat".format(directory)):
+    with open('./cluster/build.bat', 'w+') as w:
+        for directory in [dI for dI in listdir('./cluster') if path.isdir(path.join('./cluster',dI))]:                        
+            if path.exists("./cluster/{}/devops-build-local.bat".format(directory)):
                 write_line(w, 'pushd {}'.format(directory))
                 write_line(w, 'call ./devops-build-local.bat')
                 write_line(w, 'popd')
             
 
 def generate_cluster_script():
-    with open('./Containers/cluster.bat', 'w+') as w:
+    with open('./cluster/cluster.bat', 'w+') as w:
 
         write_line(w, 'kubectl delete namespace {}'.format(NAMESPACE))
         write_timeout(w, 5)
@@ -129,17 +130,17 @@ def generate_cluster_script():
         write_timeout(w, 5)
         write_line(w, 'kubectl create namespace {}'.format(NAMESPACE))
         write_timeout(w, 5)
-        for directory in [dI for dI in listdir('./Containers') if path.isdir(path.join('./containers',dI))]:
-            target_directory = './Containers/{}/cluster'.format(directory)            
+        for directory in [dI for dI in listdir('./cluster') if path.isdir(path.join('./cluster',dI))]:
+            target_directory = './cluster/{}/cluster'.format(directory)            
             for file in [f for f in listdir(target_directory) if f.startswith('deploy-local')]:
-                if path.exists("./Containers/{}/cluster/{}".format(directory, file)):
+                if path.exists("./cluster/{}/cluster/{}".format(directory, file)):
                     write_line(w, 'kubectl apply -n {} -f ./{}/cluster/{}'.format(NAMESPACE, directory, file))
                     write_timeout(w, 3)
         # write services 
-        for directory in [dI for dI in listdir('./Containers') if path.isdir(path.join('./containers',dI))]:
-            target_directory = './Containers/{}/cluster'.format(directory)            
+        for directory in [dI for dI in listdir('./cluster') if path.isdir(path.join('./cluster',dI))]:
+            target_directory = './cluster/{}/cluster'.format(directory)            
             for file in [f for f in listdir(target_directory) if f.startswith('service-local')]:
-                if path.exists("./Containers/{}/cluster/{}".format(directory, file)):
+                if path.exists("./cluster/{}/cluster/{}".format(directory, file)):
                     write_line(w, 'kubectl apply -n {} -f ./{}/cluster/{}'.format(NAMESPACE, directory, file))
                     write_timeout(w, 3)
         
@@ -149,18 +150,18 @@ def generate_cluster_script():
         write_line(w, 'kubectl get endpoints -n {} -o wide'.format(NAMESPACE))
         write_timeout(w, 10)
         # install gateways 
-        for directory in [dI for dI in listdir('./Containers') if path.isdir(path.join('./containers',dI))]:
-            target_directory = './Containers/{}/cluster'.format(directory)            
+        for directory in [dI for dI in listdir('./cluster') if path.isdir(path.join('./cluster',dI))]:
+            target_directory = './cluster/{}/cluster'.format(directory)            
             for file in [f for f in listdir(target_directory) if f.startswith('gateway-install')]:
-                if path.exists("./Containers/{}/cluster/{}".format(directory, file)):
+                if path.exists("./cluster/{}/cluster/{}".format(directory, file)):
                     write_line(w, 'kubectl apply -f ./{}/cluster/{}'.format(NAMESPACE, directory, file))                    
                     
         write_timeout(w, 10)
         # write gateways         
-        for directory in [dI for dI in listdir('./Containers') if path.isdir(path.join('./containers',dI))]:
-            target_directory = './Containers/{}/cluster'.format(directory)            
+        for directory in [dI for dI in listdir('./cluster') if path.isdir(path.join('./cluster',dI))]:
+            target_directory = './cluster/{}/cluster'.format(directory)            
             for file in [f for f in listdir(target_directory) if f.startswith('gateway-local')]:
-                if path.exists("./Containers/{}/cluster/{}".format(directory, file)):
+                if path.exists("./cluster/{}/cluster/{}".format(directory, file)):
                     write_line(w, 'kubectl apply -f ./{}/cluster/{}'.format(NAMESPACE, directory, file))
                     write_timeout(w, 3)                    
                     
