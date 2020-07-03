@@ -1,0 +1,2 @@
+kubectl config view
+kubectl cluster-info dump
