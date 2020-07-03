@@ -22,3 +22,12 @@ git push -u origin master
 
 REM REVIEW DASHBOARD TOKEN
 REM kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | sls admin-user | ForEach-Object { $_ -Split '\s+' } | Select -First 1)
+
+
+kubectl cp owlvey/owlvey-backend-local-deployment-89888bfdd-6bfbt:/app/logs ./api-logs
+
+
+owlvey-backend-local-deployment-89888bfdd-6bfbt     1/1     Running   0          74m
+owlvey-identity-local-deployment-5877484cdb-n9678   1/1     Running   0          3h13m
+owlvey-site-local-deployment-7b7845f6cb-h5bk7       1/1     Running   0          3h14m
+owlvey-state-local-deployment-f4b9c95c4-ww7x5 
