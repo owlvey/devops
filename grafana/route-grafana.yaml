@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-site  
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`grafana.cluster.com`) 
+    kind: Rule
+    services:
+    - name: grafana-monitoring-service
+      port: 48100

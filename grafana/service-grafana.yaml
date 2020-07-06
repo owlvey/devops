@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: grafana-monitoring-service  
+spec:
+  selector:
+    key: monitoring-grafana-pod    
+  ports:
+  - name: grafana
+    protocol: TCP
+    port: 48100
+    targetPort: 3000
