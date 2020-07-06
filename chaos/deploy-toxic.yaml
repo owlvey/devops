@@ -1,0 +1,72 @@
+# https://github.com/Shopify/toxiproxy#usage
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-toxi-target
+  namespace: owlvey
+spec:  
+  type: ClusterIP
+  selector:
+    key: owlvey-relational-pod
+  ports:
+    - name: api
+      protocol: TCP      
+      port: 48203
+      targetPort: 1433 
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chaos-toxi-deployment
+  namespace: owlvey    
+  labels:
+    app: chaos-toxi  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: chaos-toxi-pod
+  template:
+    metadata:
+      labels:
+        key: chaos-toxi-pod
+    spec:      
+      containers:
+      - name: chaos-toxi-container
+        image: shopify/toxiproxy
+        ports:
+        - containerPort: 8474
+          name: web
+        - containerPort: 8475
+          name: state
+        - containerPort: 8476
+          name: api
+        lifecycle:
+          postStart:
+            exec:
+              command:
+                - "sh"
+                - "-c"
+                - |
+                  /go/bin/toxiproxy-cli create target --listen 0.0.0.0:8475 --upstream service-toxi-target.owlvey.svc.cluster.local:48203 &&
+                  /go/bin/toxiproxy-cli toxic add target -t latency -a latency=2000                  
+   
+--- 
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-state  
+  namespace: owlvey    
+spec:
+  selector:
+    key: chaos-toxi-pod
+  ports:
+  - name: toxi
+    protocol: TCP
+    port: 48203
+    targetPort: 8475
+
+
