@@ -51,7 +51,7 @@ spec:
                 - "-c"
                 - |
                   /go/bin/toxiproxy-cli create target --listen 0.0.0.0:8475 --upstream service-toxi-target.owlvey.svc.cluster.local:48203 &&
-                  /go/bin/toxiproxy-cli toxic add target -t latency -a latency=2000                  
+                  /go/bin/toxiproxy-cli toxic add target -t latency -a latency=5000                  
    
 --- 
 
