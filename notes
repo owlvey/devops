@@ -31,3 +31,7 @@ owlvey-backend-local-deployment-89888bfdd-6bfbt     1/1     Running   0         
 owlvey-identity-local-deployment-5877484cdb-n9678   1/1     Running   0          3h13m
 owlvey-site-local-deployment-7b7845f6cb-h5bk7       1/1     Running   0          3h14m
 owlvey-state-local-deployment-f4b9c95c4-ww7x5 
+
+microk8s 
+
+multipass launch

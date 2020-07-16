@@ -1,0 +1,873 @@
+apiVersion: v1
+items:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"tier":"backend"},"name":"owlvey-backend-local-deployment","namespace":"owlvey"},"spec":{"replicas":1,"selector":{"matchLabels":{"key":"owlvey-api-pod"}},"template":{"metadata":{"labels":{"key":"owlvey-api-pod"}},"spec":{"containers":[{"env":[{"name":"ASPNETCORE_ENVIRONMENT","value":"k8s"}],"image":"owlveydevcommit/api:latest","imagePullPolicy":"Always","livenessProbe":{"httpGet":{"path":"/health","port":80},"initialDelaySeconds":5,"periodSeconds":3},"name":"owlvey-api","ports":[{"containerPort":80}],"startupProbe":{"failureThreshold":2,"httpGet":{"path":"/health","port":80},"periodSeconds":5}}]}}}}
+    creationTimestamp: "2020-07-14T17:52:43Z"
+    generation: 1
+    labels:
+      tier: backend
+    managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+          f:labels:
+            .: {}
+            f:tier: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector:
+            f:matchLabels:
+              .: {}
+              f:key: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:labels:
+                .: {}
+                f:key: {}
+            f:spec:
+              f:containers:
+                k:{"name":"owlvey-api"}:
+                  .: {}
+                  f:env:
+                    .: {}
+                    k:{"name":"ASPNETCORE_ENVIRONMENT"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:livenessProbe:
+                    .: {}
+                    f:failureThreshold: {}
+                    f:httpGet:
+                      .: {}
+                      f:path: {}
+                      f:port: {}
+                      f:scheme: {}
+                    f:initialDelaySeconds: {}
+                    f:periodSeconds: {}
+                    f:successThreshold: {}
+                    f:timeoutSeconds: {}
+                  f:name: {}
+                  f:ports:
+                    .: {}
+                    k:{"containerPort":80,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:protocol: {}
+                  f:resources: {}
+                  f:startupProbe:
+                    .: {}
+                    f:failureThreshold: {}
+                    f:httpGet:
+                      .: {}
+                      f:path: {}
+                      f:port: {}
+                      f:scheme: {}
+                    f:periodSeconds: {}
+                    f:successThreshold: {}
+                    f:timeoutSeconds: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+      manager: kubectl.exe
+      operation: Update
+      time: "2020-07-14T17:52:43Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: "2020-07-14T17:52:46Z"
+    name: owlvey-backend-local-deployment
+    namespace: owlvey
+    resourceVersion: "3688"
+    selfLink: /apis/apps/v1/namespaces/owlvey/deployments/owlvey-backend-local-deployment
+    uid: a053a84a-6a34-435b-85b9-8647645877c6
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        key: owlvey-api-pod
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          key: owlvey-api-pod
+      spec:
+        containers:
+        - env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: k8s
+          image: owlveydevcommit/api:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /health
+              port: 80
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 3
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: owlvey-api
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          startupProbe:
+            failureThreshold: 2
+            httpGet:
+              path: /health
+              port: 80
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-07-14T17:52:46Z"
+      lastUpdateTime: "2020-07-14T17:52:46Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2020-07-14T17:52:43Z"
+      lastUpdateTime: "2020-07-14T17:52:46Z"
+      message: ReplicaSet "owlvey-backend-local-deployment-8ccb575b8" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"owlvey-identity-local-deployment","namespace":"owlvey"},"spec":{"replicas":1,"selector":{"matchLabels":{"key":"owlvey-identity-pod"}},"template":{"metadata":{"labels":{"key":"owlvey-identity-pod"}},"spec":{"containers":[{"env":[{"name":"ASPNETCORE_ENVIRONMENT","value":"docker"},{"name":"Authentication__User","value":"admin@owlvey.com"},{"name":"Authentication__Password","value":"0wlv3y@"},{"name":"Authentication__Email","value":"admin@owlvey.com"},{"name":"ASPNETCORE_ENVIRONMENT","value":"k8s"}],"image":"owlveydevcommit/authority:latest","imagePullPolicy":"Always","name":"owlvey-identity","ports":[{"containerPort":80}]}]}}}}
+    creationTimestamp: "2020-07-14T17:52:52Z"
+    generation: 1
+    name: owlvey-identity-local-deployment
+    namespace: owlvey
+    resourceVersion: "3751"
+    selfLink: /apis/apps/v1/namespaces/owlvey/deployments/owlvey-identity-local-deployment
+    uid: 66eb8a05-ddc6-4635-8ae2-067c894f9c2e
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        key: owlvey-identity-pod
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          key: owlvey-identity-pod
+      spec:
+        containers:
+        - env:
+          - name: ASPNETCORE_ENVIRONMENT
+            value: docker
+          - name: Authentication__User
+            value: admin@owlvey.com
+          - name: Authentication__Password
+            value: 0wlv3y@
+          - name: Authentication__Email
+            value: admin@owlvey.com
+          - name: ASPNETCORE_ENVIRONMENT
+            value: k8s
+          image: owlveydevcommit/authority:latest
+          imagePullPolicy: Always
+          name: owlvey-identity
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-07-14T17:52:55Z"
+      lastUpdateTime: "2020-07-14T17:52:55Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2020-07-14T17:52:52Z"
+      lastUpdateTime: "2020-07-14T17:52:55Z"
+      message: ReplicaSet "owlvey-identity-local-deployment-668db47696" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"tier":"performance"},"name":"owlvey-performance-deployment","namespace":"owlvey"},"spec":{"replicas":1,"selector":{"matchLabels":{"key":"owlvey-performance-pod"}},"template":{"metadata":{"labels":{"key":"owlvey-performance-pod"}},"spec":{"containers":[{"env":[{"name":"LOCUST_LOCUSTFILE","value":"/app/performance/scenarios/scenario_organization_load.py"},{"name":"OWLVEY_IDENTITY","value":"http://service-identity:48100/"},{"name":"OWLVEY_API","value":"http://service-api:48100/"},{"name":"OWLVEY_CLIENT_API","value":"CF4A9ED44148438A99919FF285D8B48D"},{"name":"OWLVEY_CLIENT_SECRET","value":"0da45603-282a-4fa6-a20b-2d4c3f2a2127"},{"name":"LOCUST_HOST","value":"http://service-api:48100"},{"name":"LOCUST_USERS","value":"10"},{"name":"LOCUST_HATCH_RATE","value":"5"},{"name":"LOCUST_MODE_MASTER","value":"false"},{"name":"LOCUST_EXPECT_WORKERS","value":"1"}],"image":"owlveydevcommit/performance:latest","imagePullPolicy":"Always","name":"owlvey-performance","ports":[{"containerPort":8089,"name":"web"},{"containerPort":5557,"name":"cluster"},{"containerPort":5558,"name":"communication"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","terminationGracePeriodSeconds":30}}}}
+    creationTimestamp: "2020-07-14T17:56:10Z"
+    generation: 1
+    labels:
+      tier: performance
+    managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+          f:labels:
+            .: {}
+            f:tier: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector:
+            f:matchLabels:
+              .: {}
+              f:key: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:labels:
+                .: {}
+                f:key: {}
+            f:spec:
+              f:containers:
+                k:{"name":"owlvey-performance"}:
+                  .: {}
+                  f:env:
+                    .: {}
+                    k:{"name":"LOCUST_EXPECT_WORKERS"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"LOCUST_HATCH_RATE"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"LOCUST_HOST"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"LOCUST_LOCUSTFILE"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"LOCUST_MODE_MASTER"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"LOCUST_USERS"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"OWLVEY_API"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"OWLVEY_CLIENT_API"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"OWLVEY_CLIENT_SECRET"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"OWLVEY_IDENTITY"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:ports:
+                    .: {}
+                    k:{"containerPort":5557,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:name: {}
+                      f:protocol: {}
+                    k:{"containerPort":5558,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:name: {}
+                      f:protocol: {}
+                    k:{"containerPort":8089,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:name: {}
+                      f:protocol: {}
+                  f:resources: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+      manager: kubectl.exe
+      operation: Update
+      time: "2020-07-14T17:56:10Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: "2020-07-14T17:56:12Z"
+    name: owlvey-performance-deployment
+    namespace: owlvey
+    resourceVersion: "4272"
+    selfLink: /apis/apps/v1/namespaces/owlvey/deployments/owlvey-performance-deployment
+    uid: a61ae183-f840-4381-8a3f-4ff1d625fcca
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        key: owlvey-performance-pod
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          key: owlvey-performance-pod
+      spec:
+        containers:
+        - env:
+          - name: LOCUST_LOCUSTFILE
+            value: /app/performance/scenarios/scenario_organization_load.py
+          - name: OWLVEY_IDENTITY
+            value: http://service-identity:48100/
+          - name: OWLVEY_API
+            value: http://service-api:48100/
+          - name: OWLVEY_CLIENT_API
+            value: CF4A9ED44148438A99919FF285D8B48D
+          - name: OWLVEY_CLIENT_SECRET
+            value: 0da45603-282a-4fa6-a20b-2d4c3f2a2127
+          - name: LOCUST_HOST
+            value: http://service-api:48100
+          - name: LOCUST_USERS
+            value: "10"
+          - name: LOCUST_HATCH_RATE
+            value: "5"
+          - name: LOCUST_MODE_MASTER
+            value: "false"
+          - name: LOCUST_EXPECT_WORKERS
+            value: "1"
+          image: owlveydevcommit/performance:latest
+          imagePullPolicy: Always
+          name: owlvey-performance
+          ports:
+          - containerPort: 8089
+            name: web
+            protocol: TCP
+          - containerPort: 5557
+            name: cluster
+            protocol: TCP
+          - containerPort: 5558
+            name: communication
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-07-14T17:56:12Z"
+      lastUpdateTime: "2020-07-14T17:56:12Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2020-07-14T17:56:10Z"
+      lastUpdateTime: "2020-07-14T17:56:12Z"
+      message: ReplicaSet "owlvey-performance-deployment-7475d4878" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"name":"owlvey-site-local-deployment","namespace":"owlvey"},"spec":{"replicas":1,"selector":{"matchLabels":{"key":"owlvey-site-pod"}},"template":{"metadata":{"labels":{"key":"owlvey-site-pod"}},"spec":{"containers":[{"env":[{"name":"ENVIRONMENT","value":"k8s"}],"image":"owlveydevcommit/k8ssite:latest","imagePullPolicy":"Always","name":"owlvey-site","ports":[{"containerPort":80}]}]}}}}
+    creationTimestamp: "2020-07-14T17:52:49Z"
+    generation: 1
+    managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector:
+            f:matchLabels:
+              .: {}
+              f:key: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:labels:
+                .: {}
+                f:key: {}
+            f:spec:
+              f:containers:
+                k:{"name":"owlvey-site"}:
+                  .: {}
+                  f:env:
+                    .: {}
+                    k:{"name":"ENVIRONMENT"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:ports:
+                    .: {}
+                    k:{"containerPort":80,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:protocol: {}
+                  f:resources: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+      manager: kubectl.exe
+      operation: Update
+      time: "2020-07-14T17:52:49Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: "2020-07-14T17:52:52Z"
+    name: owlvey-site-local-deployment
+    namespace: owlvey
+    resourceVersion: "3731"
+    selfLink: /apis/apps/v1/namespaces/owlvey/deployments/owlvey-site-local-deployment
+    uid: b6c83c11-9fbf-46b2-9b0a-9394383f9b53
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        key: owlvey-site-pod
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          key: owlvey-site-pod
+      spec:
+        containers:
+        - env:
+          - name: ENVIRONMENT
+            value: k8s
+          image: owlveydevcommit/k8ssite:latest
+          imagePullPolicy: Always
+          name: owlvey-site
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-07-14T17:52:52Z"
+      lastUpdateTime: "2020-07-14T17:52:52Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2020-07-14T17:52:49Z"
+      lastUpdateTime: "2020-07-14T17:52:52Z"
+      message: ReplicaSet "owlvey-site-local-deployment-6d85cf5dd6" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    annotations:
+      deployment.kubernetes.io/revision: "1"
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"owlvey","tier":"state"},"name":"owlvey-state-local-deployment","namespace":"owlvey"},"spec":{"replicas":1,"selector":{"matchLabels":{"key":"owlvey-relational-pod"}},"template":{"metadata":{"labels":{"key":"owlvey-relational-pod"}},"spec":{"containers":[{"env":[{"name":"SA_PASSWORD","value":"TheFalcon123"},{"name":"ACCEPT_EULA","value":"Y"},{"name":"ASPNETCORE_ENVIRONMENT","value":"docker"},{"name":"MSSQL_PID","value":"Express"}],"image":"owlveydevcommit/relational:latest","imagePullPolicy":"Always","name":"db","ports":[{"containerPort":1433}]}]}}}}
+    creationTimestamp: "2020-07-14T17:52:46Z"
+    generation: 1
+    labels:
+      app: owlvey
+      tier: state
+    managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+          f:labels:
+            .: {}
+            f:app: {}
+            f:tier: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector:
+            f:matchLabels:
+              .: {}
+              f:key: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:labels:
+                .: {}
+                f:key: {}
+            f:spec:
+              f:containers:
+                k:{"name":"db"}:
+                  .: {}
+                  f:env:
+                    .: {}
+                    k:{"name":"ACCEPT_EULA"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"ASPNETCORE_ENVIRONMENT"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"MSSQL_PID"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                    k:{"name":"SA_PASSWORD"}:
+                      .: {}
+                      f:name: {}
+                      f:value: {}
+                  f:image: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:ports:
+                    .: {}
+                    k:{"containerPort":1433,"protocol":"TCP"}:
+                      .: {}
+                      f:containerPort: {}
+                      f:protocol: {}
+                  f:resources: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+      manager: kubectl.exe
+      operation: Update
+      time: "2020-07-14T17:52:46Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:availableReplicas: {}
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:readyReplicas: {}
+          f:replicas: {}
+          f:updatedReplicas: {}
+      manager: kube-controller-manager
+      operation: Update
+      time: "2020-07-14T17:52:49Z"
+    name: owlvey-state-local-deployment
+    namespace: owlvey
+    resourceVersion: "3711"
+    selfLink: /apis/apps/v1/namespaces/owlvey/deployments/owlvey-state-local-deployment
+    uid: f7bf17e0-8aa3-4c6a-aa8d-5757922d3769
+  spec:
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        key: owlvey-relational-pod
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          key: owlvey-relational-pod
+      spec:
+        containers:
+        - env:
+          - name: SA_PASSWORD
+            value: TheFalcon123
+          - name: ACCEPT_EULA
+            value: "Y"
+          - name: ASPNETCORE_ENVIRONMENT
+            value: docker
+          - name: MSSQL_PID
+            value: Express
+          image: owlveydevcommit/relational:latest
+          imagePullPolicy: Always
+          name: db
+          ports:
+          - containerPort: 1433
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+  status:
+    availableReplicas: 1
+    conditions:
+    - lastTransitionTime: "2020-07-14T17:52:49Z"
+      lastUpdateTime: "2020-07-14T17:52:49Z"
+      message: Deployment has minimum availability.
+      reason: MinimumReplicasAvailable
+      status: "True"
+      type: Available
+    - lastTransitionTime: "2020-07-14T17:52:46Z"
+      lastUpdateTime: "2020-07-14T17:52:49Z"
+      message: ReplicaSet "owlvey-state-local-deployment-5f8dd7bcc6" has successfully
+        progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    observedGeneration: 1
+    readyReplicas: 1
+    replicas: 1
+    updatedReplicas: 1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""

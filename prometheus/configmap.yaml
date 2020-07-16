@@ -76,3 +76,4 @@ data:
 kind: ConfigMap
 metadata:  
   name: prometheus-monitoring-cm
+  namespace: monitoring

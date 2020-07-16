@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: prometheus-monitoring-service  
+  namespace: monitoring
 spec:
   selector:
     key: monitoring-prometheus-pod    

@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-datasources  
+  namespace: monitoring
 data:
   prometheus.yaml: |-
     {
@@ -24,7 +25,8 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboards  
+  name: grafana-dashboards    
+  namespace: monitoring
 data:
   prometheus_ds.yml : |-
     apiVersion: 1
@@ -44,6 +46,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: grafana-dashboards-samples  
+  namespace: monitoring
 data:
   dotnetruntime.json: |-
     {
