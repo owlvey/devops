@@ -17,4 +17,4 @@ kubectl delete -f ./grafana/route-grafana.yaml
 kubectl delete -f ./dashboard/deploy-admin.yaml
 kubectl delete namespace kubernetes-dashboard
 
-
+kubectl delete -f ./metricserver/deploy-metricserver.yaml

@@ -1,0 +1,1 @@
+./linkerd uninstall  | kubectl delete -f -

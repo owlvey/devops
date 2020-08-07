@@ -1,0 +1,14 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: mail-site  
+  namespace: mailing
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`mail.cluster.com`) 
+    kind: Rule
+    services:
+    - name: mailing-mail-service
+      port: 48100

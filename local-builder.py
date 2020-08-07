@@ -57,7 +57,7 @@ def create_folders():
 
 def execute_yaml(target):
     script = "{} \n".format(target)
-    script += "TIMEOUT 3 \n"
+    script += "TIMEOUT 1 \n"
     return script
 
 
@@ -125,11 +125,11 @@ def generate_cluster_script():
     with open('./cluster/cluster.bat', 'w+') as w:
 
         write_line(w, 'kubectl delete namespace {}'.format(NAMESPACE))
-        write_timeout(w, 5)
+        write_timeout(w, 2)
         write_line(w, 'kubectl delete ingress-nginx {}'.format(NAMESPACE))
-        write_timeout(w, 5)
+        write_timeout(w, 2)
         write_line(w, 'kubectl create namespace {}'.format(NAMESPACE))
-        write_timeout(w, 5)
+        write_timeout(w, 2)
         for directory in [dI for dI in listdir('./cluster') if path.isdir(path.join('./cluster',dI))]:
             target_directory = './cluster/{}/cluster'.format(directory)            
             for file in [f for f in listdir(target_directory) if f.startswith('deploy-local')]:

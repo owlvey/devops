@@ -1,0 +1,36 @@
+https://github.com/Shopify/toxiproxy
+
+cd /go/bin
+
+./toxiproxy-cli list
+
+./toxiproxy-cli inspect target
+
+# delay 
+./toxiproxy-cli toxic add target -t latency -a latency=500                  
+./toxiproxy-cli toxic remove target -n latency_downstream
+
+
+./toxiproxy-cli toxic add target -t bandwidth -a rate=1                  
+./toxiproxy-cli toxic remove target -n bandwidth_downstream
+
+
+# limit and throw exception
+./toxiproxy-cli toxic add target -t limit_data -a bytes=100000                  
+./toxiproxy-cli toxic remove target -n limit_data_downstream
+
+
+# dont upstream close connections 
+./toxiproxy-cli toxic add target --upstream -t timeout -a timeout=0
+./toxiproxy-cli toxic remove target -n timeout_upstream
+
+
+# dont upstream close connections 
+./toxiproxy-cli toxic add target --toxicity 0.9 --upstream -t timeout -a timeout=0
+./toxiproxy-cli toxic remove target -n timeout_upstream
+
+
+
+
+
+# toxiproxy-cli delete redis

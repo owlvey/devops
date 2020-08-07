@@ -1,0 +1,8 @@
+https://github.com/mailhog/MailHog/blob/master/docs/JIM.md
+
+http://mail.cluster.com:48100/api/v2/messages
+
+
+kubectl port-forward -n mailing  mail-deployment-c796fd5f9-vc4kx 1025
+
+

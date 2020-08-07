@@ -130,3 +130,5 @@ dmypy.json
 
 Containers/
 cluster/
+
+tracing/instrumentation/trace

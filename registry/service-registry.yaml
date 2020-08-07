@@ -2,12 +2,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: registry-service
-  namespace: devops
-spec:
-  # ClusterIP NodePort LoadBalancer
+  namespace: registry
+spec:  
   type: ClusterIP
   selector:
-    key: devops-registry-pod
+    key: registry-pod
   ports:
     - name: cluster-registry
       protocol: TCP

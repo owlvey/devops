@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracing-zipkin-deployment    
+  namespace: tracing
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: tracing-zipkin-pod
+  template:
+    metadata:
+      labels:
+        key: tracing-zipkin-pod
+    spec:
+      containers:
+      - name: container
+        image: openzipkin/zipkin:latest        
+        ports:
+            - containerPort: 9411
+              name: port                 
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: zipkin-service
+  namespace: tracing
+spec:  
+  type: ClusterIP
+  selector:
+    key: tracing-zipkin-pod
+  ports:
+    - name: zipkin
+      protocol: TCP      
+      port: 48100
+      targetPort: 9411    
+    
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: zipkin-route  
+  namespace: tracing
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`zipkin.cluster.com`) 
+    kind: Rule
+    services:
+    - name: zipkin-service
+      port: 48100

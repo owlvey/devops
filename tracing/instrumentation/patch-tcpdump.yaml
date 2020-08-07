@@ -1,0 +1,8 @@
+# https://hub.docker.com/r/kaazing/tcpdump
+# https://rmoff.net/2019/11/29/using-tcpdump-with-docker/
+spec:
+  template:
+    spec:
+      containers:
+      - name: tcpdumper
+        image: kaazing/tcpdump        

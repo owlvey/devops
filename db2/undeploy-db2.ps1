@@ -1,0 +1,1 @@
+kubectl delete -f deploy-db2.yaml

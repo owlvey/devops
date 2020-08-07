@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mail-deployment
+  namespace: mailing    
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: mailing-mail-pod
+  template:
+    metadata:
+      labels:
+        key: mailing-mail-pod
+    spec:
+      containers:
+      - name: mail-container
+        image: mailhog/mailhog        
+        ports:
+            - containerPort: 1025
+              name: smtp
+            - containerPort: 8025
+              name: admin
+            

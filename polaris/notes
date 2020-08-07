@@ -1,0 +1,3 @@
+https://github.com/FairwindsOps/polaris
+
+kubectl port-forward --namespace polaris svc/polaris-dashboard 9090:80

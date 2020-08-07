@@ -1,3 +1,21 @@
+https://minikube.sigs.k8s.io/docs/handbook/registry/
+
+# docker on windows 
+minikube addons enable registry
+
+kubectl port-forward --namespace kube-system registry-jfw5j 5000:5000
+
+docker run --rm -it --network=host alpine ash -c "apk add socat && socat TCP-LISTEN:5000,reuseaddr,fork TCP:host.docker.internal:5000"
+
+
+
+http://localhost:5000/v2/_catalog
+
+http://localhost:5000/v2/registry/k8ssite/tags/list
+
+
+
+
 https://www.nearform.com/blog/how-to-run-a-public-docker-registry-in-kubernetes/
 
 TIMEOUT 5
@@ -7,3 +25,33 @@ kubectl create namespace devops
 kubectl apply -f ./registry/deploy-registry.yaml
 kubectl apply -f ./registry/service-registry.yaml
 kubectl apply -f ./registry/route-registry.yaml
+
+
+
+REM curl -X GET http://localhost:48700/v2/owlvey/authority/tags/list
+
+
+
+http://localhost:48700/v2/registry/api/tags/list
+
+
+https://docs.docker.com/registry/insecure/
+
+
+docker stop registry
+TIMEOUT 5
+docker rm registry
+
+docker container prune -f 
+
+docker image prune -a -f 
+
+TIMEOUT 3
+
+docker run -d -p 48700:5000 --restart=always --name registry registry:latest
+
+
+
+https://developers.redhat.com/blog/2019/07/11/deploying-an-internal-container-registry-with-minikube-add-ons/
+
+minikube addons enable registry

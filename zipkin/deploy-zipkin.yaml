@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: owlvey-envoy-deployment    
+  namespace: owlvey
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      key: owlvey-envoy-pod
+  template:
+    metadata:
+      labels:
+        key: owlvey-envoy-pod
+    spec:
+      containers:
+      - name: envoy-container
+        image: envoyproxy/envoy-dev:latest
+        args:
+          - --config-path /app/envoy.yaml 
+          - --service-cluster service-api-envoy
+        
+        volumeMounts:
+          - name: config-volume
+            mountPath: /app/envoy.yaml
+            subPath: envoy.yml
+        
+        ports:
+            - containerPort: 9901
+              name: admin-port
+            - containerPort: 10000
+              name: listerner-port
+      volumes:
+        - name: config-volume
+          configMap:
+            name: envoy-cm
+
+  

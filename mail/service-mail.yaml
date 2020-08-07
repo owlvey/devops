@@ -1,0 +1,17 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mailing-mail-service  
+  namespace: mailing
+spec:
+  selector:
+    key: mailing-mail-pod    
+  ports:
+  - name: admin
+    protocol: TCP
+    port: 48100
+    targetPort: 8025
+  - name: smtp
+    protocol: TCP
+    port: 48125
+    targetPort: 1025

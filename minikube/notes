@@ -1,31 +1,24 @@
-# windows 
-# https://medium.com/@JockDaRock/minikube-on-windows-10-with-hyper-v-6ef0f4dc158c
+# windows https://medium.com/@JockDaRock/minikube-on-windows-10-with-hyper-v-6ef0f4dc158c
 
 # as administrator 
-
 choco install minikube
-
 choco install kubernetes-cli
+# minikube delete --all
 
-
-
-minikube start --vm-driver hyperv --hyperv-virtual-switch "minikubeswitch"
+minikube start --vm-driver hyperv --hyperv-virtual-switch "minikubeswitch"  --cpus 4 --memory 20000
 
 minikube tunnel
 
 minikube dashboard
 
-minikube delete --all
+# minikube start --insecure-registry="192.168.0.14:48700"
 
-minikube start --insecure-registry="192.168.0.14:48700"
-
-
-# works 
+# works registry 
 
 minikube addons enable registry
 
 https://minikube.sigs.k8s.io/docs/handbook/registry/
 
-kubectl port-forward --namespace kube-system <name of the registry vm> 5000:5000
+kubectl port-forward --namespace kube-system registry-8rjnd 5000:5000
 
 docker run --rm -it --network=host alpine ash -c "apk add socat && socat TCP-LISTEN:5000,reuseaddr,fork TCP:host.docker.internal:5000"

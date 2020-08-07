@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  db2compose:
+        build:
+          context: ./
+          dockerfile: ./Dockerfile
+        image: registry/db2
+  
+ 

@@ -16,7 +16,7 @@ kubectl get deployments -n owlvey
 
 kubectl describe deployments owlvey-bifrost-dev-deployment -n owlvey
 
-REM curl -X GET http://localhost:48700/v2/owlvey/bifrost/tags/list
+REM curl -X GET http://localhost:48700/v2/owlvey/authority/tags/list
 
 docker run --name bifrost -p 8090:48701 --rm localhost:48700/owlvey/bifrost:latest
 docker stop bifrost
