@@ -56,8 +56,7 @@ def create_folders():
         mkdir('./cluster/stage_routes')
 
 def execute_yaml(target):
-    script = "{} \n".format(target)
-    script += "TIMEOUT 1 \n"
+    script = "{} \n".format(target)    
     return script
 
 
@@ -110,7 +109,8 @@ def write_line(writer, target):
     writer.write('{} \n'.format(target))
 
 def write_timeout(writer, timeout=5):
-    write_line(writer, 'TIMEOUT {}'.format(timeout))
+    # write_line(writer, 'TIMEOUT {}'.format(timeout))
+    pass
 
 def generate_cluster_builder():
     with open('./cluster/build.bat', 'w+') as w:
